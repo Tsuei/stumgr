@@ -1,6 +1,6 @@
 # === Qt 构建产生的临时文件夹 ===
-# 屏蔽 Qt Creator 默认生成的影子构建目录（以 build- 开头）
-build-*/
+# 屏蔽 Qt Creator 默认生成的影子构建目录（build）
+build/
 
 # 屏蔽手动定义的输出目录（如你提到的 bin 和生成的 debug/release）
 bin/
@@ -8,7 +8,7 @@ debug/
 release/
 ipch/
 
-# === Qt 自动生成的代码 (不需要上传，编译时会自动生成) ===
+# === Qt 自动生成的代码（不需要上传，编译时会自动生成）===
 moc_*.cpp
 moc_*.h
 ui_*.h
@@ -16,7 +16,7 @@ qrc_*.cpp
 qrc_*.h
 object_script.*
 
-# === 个人配置文件 (包含本地路径，上传会导致别人无法编译) ===
+# === 个人配置文件（包含本地路径，上传会导致别人无法编译）===
 *.pro.user
 *.pro.user.*
 *.CMakeLists.txt.user
@@ -35,3 +35,7 @@ object_script.*
 # === 其他临时文件 ===
 *.autosave
 .qmake.stash
+
+# 屏蔽所有以 Makefile 开头的文件
+[Mm]akefile*
+Makefile*
