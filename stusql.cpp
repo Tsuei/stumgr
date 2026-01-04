@@ -46,6 +46,8 @@ void stuSql::init()
         qDebug()<<"No database drivers found";
 
     m_db = QSqlDatabase::addDatabase("QSQLITE");
+
+    // 获取数据库路径（在可执行文件同级目录）
 #if 1
     auto str = QCoreApplication::applicationDirPath()+"/data.db";
     qDebug()<<str;
@@ -55,6 +57,29 @@ void stuSql::init()
     if (!m_db.open())
        qDebug()<<"db not open";
 
+
+    // --- 核心：自动化建表逻辑 ---
+    QSqlQuery query(m_db);
+
+    // 使用 IF NOT EXISTS，确保只在表不存在时才创建
+    // 字段类型根据你提供的 SQL 保持一致
+    QString createTableSql =
+        "CREATE TABLE IF NOT EXISTS \"student\" ("
+        "  \"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,"
+        "  \"name\" TEXT,"
+        "  \"age\" integer,"
+        "  \"grade\" integer,"
+        "  \"class\" integer," // 数据库字段名为 class
+        "  \"studentid\" integer,"
+        "  \"phone\" TEXT,"
+        "  \"wechat\" TEXT"
+        ");";
+
+    if (!query.exec(createTableSql)) {
+        qDebug() << "自动初始化表失败:" << query.lastError().text();
+    } else {
+        qDebug() << "数据库表检查/创建成功！";
+    }
 }
 
 quint32 stuSql::getStuCnt()
